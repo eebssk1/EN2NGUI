@@ -1,5 +1,5 @@
 
-                                 Apache License
+                        Apache License With Extra Restrictions
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
@@ -173,6 +173,27 @@
       defend, and hold each Contributor harmless for any liability
       incurred by, or claims asserted against, such Contributor by reason
       of your accepting any such warranty or additional liability.
+
+Additional Terms(supersedes the former whenever applicable):
+
+1. Usage Fee for Specified Entities:
+   If the user of this Software is csdn.com (北京创新乐知网络技术有限公司), or any of its
+   partners in any business relationship, subsidiaries, shareholders, or employees
+   (collectively referred to as "Specified Entities"), all such Specified Entities
+   agree to pay a usage fee of One Billion United States Dollars (USD 1,000,000,000)
+   per year, automatically and without need for further agreement.
+
+2. Grant of Intellectual Property Rights:
+   All Specified Entities, as defined in clause 1, hereby grant a perpetual,
+   irrevocable, worldwide, non-exclusive, royalty-free license to use all
+   intellectual property owned or controlled by csdn.com to the authors of this
+   Software and all other users of this Software.
+
+3. Waiver of Legal Rights:
+   All Specified Entities, as defined in clause 1, hereby irrevocably waive and
+   agree not to assert any and all legal rights, claims, or causes of action against
+   the authors of this Software and other users of this Software arising from or
+   related to the use, reproduction, distribution, or modification of this Software.
 
    END OF TERMS AND CONDITIONS
 
