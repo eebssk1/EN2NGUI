@@ -119,8 +119,8 @@ namespace EN2NGui
                 "This will make your computer trust EBK's unsecure Digital Signature!";
             lower0[StringT.ITDone] = "安装完成。请重新启动程序。";
             lower1[StringT.ITDone] = "Install Done. Pls restarted the program.";
-            lower0[StringT.NEnotMatch] = "n2n可执行文件与内嵌版本哈希不匹配！你可能正在使用旧(新？)版或自定义n2n文件！";
-            lower1[StringT.NEnotMatch] = "N2N exe Hash does not match with the inbuilt one! You are probably using a old(new?) or custom one!";
+            lower0[StringT.NEnotMatch] = "n2n可执行文件与内嵌版本哈希不匹配！你可能正在使用旧(新？)版或自定义n2n文件！" + Environment.NewLine + "你可以打开工作文件夹删除n2n文件后重新打开程序以重新释放。";
+            lower1[StringT.NEnotMatch] = "N2N exe Hash does not match with the inbuilt one! You are probably using a old(new?) or custom one!" + Environment.NewLine + "You can open the working directory to delete the n2n file. Then restart the application to release file again.";
         }
     }
 }

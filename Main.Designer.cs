@@ -68,6 +68,7 @@
             this.LblMt = new System.Windows.Forms.Label();
             this.CboxMt = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BtnAbout = new System.Windows.Forms.Button();
             this.LblUD = new System.Windows.Forms.Label();
             this.BtnPer = new System.Windows.Forms.Button();
             this.BtnInsTAP = new System.Windows.Forms.Button();
@@ -75,7 +76,8 @@
             this.LblTAPname = new System.Windows.Forms.Label();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.LblIP = new System.Windows.Forms.Label();
-            this.BtnAbout = new System.Windows.Forms.Button();
+            this.LblVersion = new System.Windows.Forms.Label();
+            this.BtnWd = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -523,6 +525,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.BtnWd);
+            this.panel2.Controls.Add(this.LblVersion);
             this.panel2.Controls.Add(this.BtnAbout);
             this.panel2.Controls.Add(this.LblUD);
             this.panel2.Controls.Add(this.BtnPer);
@@ -535,6 +539,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(471, 373);
             this.panel2.TabIndex = 1;
+            // 
+            // BtnAbout
+            // 
+            this.BtnAbout.Location = new System.Drawing.Point(296, 324);
+            this.BtnAbout.Name = "BtnAbout";
+            this.BtnAbout.Size = new System.Drawing.Size(75, 23);
+            this.BtnAbout.TabIndex = 33;
+            this.BtnAbout.Text = "About";
+            this.BtnAbout.UseVisualStyleBackColor = true;
+            this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
             // 
             // LblUD
             // 
@@ -549,7 +563,7 @@
             // BtnPer
             // 
             this.BtnPer.AutoSize = true;
-            this.BtnPer.Location = new System.Drawing.Point(141, 324);
+            this.BtnPer.Location = new System.Drawing.Point(199, 322);
             this.BtnPer.Name = "BtnPer";
             this.BtnPer.Size = new System.Drawing.Size(80, 25);
             this.BtnPer.TabIndex = 31;
@@ -613,15 +627,25 @@
             this.LblIP.TabIndex = 0;
             this.LblIP.Text = "IP:";
             // 
-            // BtnAbout
+            // LblVersion
             // 
-            this.BtnAbout.Location = new System.Drawing.Point(265, 324);
-            this.BtnAbout.Name = "BtnAbout";
-            this.BtnAbout.Size = new System.Drawing.Size(75, 23);
-            this.BtnAbout.TabIndex = 33;
-            this.BtnAbout.Text = "About";
-            this.BtnAbout.UseVisualStyleBackColor = true;
-            this.BtnAbout.Click += new System.EventHandler(this.BtnAbout_Click);
+            this.LblVersion.AutoSize = true;
+            this.LblVersion.Location = new System.Drawing.Point(307, 353);
+            this.LblVersion.Name = "LblVersion";
+            this.LblVersion.Size = new System.Drawing.Size(47, 12);
+            this.LblVersion.TabIndex = 34;
+            this.LblVersion.Text = "version";
+            // 
+            // BtnWd
+            // 
+            this.BtnWd.AutoSize = true;
+            this.BtnWd.Location = new System.Drawing.Point(199, 348);
+            this.BtnWd.Name = "BtnWd";
+            this.BtnWd.Size = new System.Drawing.Size(80, 22);
+            this.BtnWd.TabIndex = 35;
+            this.BtnWd.Text = "Open WD";
+            this.BtnWd.UseVisualStyleBackColor = true;
+            this.BtnWd.Click += new System.EventHandler(this.LblWd_Click);
             // 
             // GUI
             // 
@@ -705,6 +729,8 @@
         private System.Windows.Forms.Button BtnPer;
         internal System.Windows.Forms.Label LblUD;
         private System.Windows.Forms.Button BtnAbout;
+        private System.Windows.Forms.Label LblVersion;
+        private System.Windows.Forms.Button BtnWd;
     }
 }
 

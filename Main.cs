@@ -42,7 +42,7 @@ namespace EN2NGui
                 LblMDis.Text = "MTU探测";
                 Lblbroa.Text = "接受多播";
                 LblHeaderEn.Text = "加密头部";
-                LblNickname.Text = "昵称";
+                LblNickname.Text = "昵称(必须英文)";
                 LblTap.Text = "TAP网卡";
                 LblFwd.Text = "启用路由";
                 LblMt.Text = "设置跳数";
@@ -50,19 +50,21 @@ namespace EN2NGui
                 BtnInsTAP.Text = "安装TAP";
                 BtnPer.Text = "显示对等方";
                 BtnAbout.Text = "关于";
+                BtnWd.Text = "打开工作文件夹";
                 CboxBroa.Text = StringRes.GetString(StringRes.StringT.Enable);
                 CboxHeaderEn.Text = StringRes.GetString(StringRes.StringT.Enable);
                 CboxMD.Text = StringRes.GetString(StringRes.StringT.Enable);
                 CboxRt.Text = StringRes.GetString(StringRes.StringT.Enable);
                 CboxMt.Text = StringRes.GetString(StringRes.StringT.Enable);
-                CboxTap.DataSource = MiscData.TAPs.ToList();
-                CboxTap.DisplayMember = "Value";
-                CboxTap.ValueMember = "Key";
             }
         }
 
         private void GUI_Load(object sender, System.EventArgs e)
         {
+            LblVersion.Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            CboxTap.DataSource = MiscData.TAPs.ToList();
+            CboxTap.DisplayMember = "Value";
+            CboxTap.ValueMember = "Key";
             peerForm = new PeerForm();
             if (!MiscData.haveExe) BtnStart.Enabled = false;
             if (!MiscData.isAdmin) BtnInsTAP.Enabled = false;
@@ -206,6 +208,7 @@ namespace EN2NGui
                 else
                 {
                     e.Cancel = true;
+                    return;
                 }
             }
             closed = true;
@@ -441,6 +444,11 @@ namespace EN2NGui
                 "https://github.com/eebssk1/EN2NGUI" + Environment.NewLine + Environment.NewLine +
                 "Inbuilt N2N exe md5 hash: " + MiscData.inbuiltN2NHash;
             MessageBox.Show(s, "About");
+        }
+
+        private void LblWd_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", MiscData.PWD);
         }
     }
 }

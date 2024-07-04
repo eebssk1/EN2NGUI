@@ -96,7 +96,7 @@ namespace EN2NGui
                     MiscData.haveExe = false;
                 }
             }
-            if(MiscData.haveExe)
+            if (MiscData.haveExe)
             {
                 MD5 md5 = MD5.Create();
                 var ehash = md5.ComputeHash(Properties.Resources.n2n_edge);

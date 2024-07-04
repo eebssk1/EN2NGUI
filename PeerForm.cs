@@ -72,7 +72,8 @@ namespace EN2NGui
             table.PrimaryKey = null;
             table.Columns.AddRange(cls);
             source.DataSource = table;
-            dataGridView1.DataSource = source;
+            Action act = () => { dataGridView1.DataSource = source; };
+            dataGridView1.Invoke(act);
             Thread t = new Thread(Do);
             t.IsBackground = true;
             t.Priority = ThreadPriority.BelowNormal;
@@ -158,7 +159,7 @@ namespace EN2NGui
                     {
                         foreach (DataRow dr in table.Rows)
                         {
-                            if ((string)dr["Nick"] == d.Value<string>("desc"))
+                            if (((string)dr["Nick"]).Equals(d.Value<string>("desc")))
                             {
                                 Action act = () => { table.Rows.Remove(dr); };
                                 dataGridView1.Invoke(act);
@@ -166,11 +167,9 @@ namespace EN2NGui
                             }
                         }
                     }
-                    table.Rows.Add(r);
-                }
-                Action act1 = () => { source.ResetBindings(false); };
-                if (table.Rows.Count != 0)
+                    Action act1 = () => { table.Rows.Add(r); };
                     dataGridView1.Invoke(act1);
+                }
                 Thread.Yield();
                 Thread.Sleep(2550);
             }

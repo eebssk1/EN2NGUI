@@ -16,8 +16,8 @@ namespace EN2NGui
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-              Application.ThreadException += handleException;
-              AppDomain.CurrentDomain.UnhandledException += handleException;
+            Application.ThreadException += handleException;
+            AppDomain.CurrentDomain.UnhandledException += handleException;
             Directory.SetCurrentDirectory(MiscData.PWD);
             Application.Run(new Spla());
             if (!MiscData.isSplashExitAbornomal)

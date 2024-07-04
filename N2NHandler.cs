@@ -27,6 +27,8 @@ namespace EN2NGui
         internal int trycount = 0;
         private bool needworkdelay = false;
         private Thread workThread;
+        private long pUP = 0;
+        private long pDN = 0;
         private N2NHandler(GUI i)
         {
             Instance = this;
@@ -95,11 +97,16 @@ namespace EN2NGui
                             Thread.Sleep(80);
                         }
                         timeout += 1;
-                        if (timeout >= 185)
+                        if (timeout >= 160)
                         {
                             timeout = 0;
                             i.UpdateTxtBox("Too long... Request exit again...");
                             GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+                        }
+                        else if (timeout > 250)
+                        {
+                            i.UpdateTxtBox("Too long WTF... Kill!..");
+                            process.Kill();
                         }
                     }
                 }
@@ -152,6 +159,9 @@ namespace EN2NGui
             process.OutputDataReceived += addtxt;
             process.ErrorDataReceived += addtxt;
             process.Exited += handleExit;
+            var Int = NetworkInterface.GetAllNetworkInterfaces().SingleOrDefault(x => x.Id == MiscData.currentTAP.Id);
+            pDN = Int.GetIPStatistics().BytesReceived / 1024;
+            pUP = Int.GetIPStatistics().BytesSent / 1024;
             process.Start();
             PID = process.Id;
             process.BeginOutputReadLine();
@@ -171,11 +181,11 @@ namespace EN2NGui
                 {
                     if (Thread.Yield())
                     {
-                        Thread.Sleep(50);
+                        Thread.Sleep(70);
                     }
                     else
                     {
-                        Thread.Sleep(100);
+                        Thread.Sleep(120);
                     }
                     continue;
                 };
@@ -184,20 +194,20 @@ namespace EN2NGui
                     needworkdelay = false;
                     if (Thread.Yield())
                     {
-                        Thread.Sleep(1250);
+                        Thread.Sleep(1300);
                     }
                     else
                     {
-                        Thread.Sleep(1500);
+                        Thread.Sleep(1600);
                     }
                 }
                 NetworkInterface Int = null;
                 if (i.WindowState != FormWindowState.Minimized)
                 {
                     Int = NetworkInterface.GetAllNetworkInterfaces().SingleOrDefault(x => x.Id == MiscData.currentTAP.Id);
-                    var d = Int.GetIPStatistics().BytesReceived / 1024;
-                    var u = Int.GetIPStatistics().BytesSent / 1024;
-                    i.UpdateLabel(i.LblUD, "Up: " + u + Environment.NewLine + "Down: " + d);
+                    var DN = Int.GetIPStatistics().BytesReceived / 1024;
+                    var UP = Int.GetIPStatistics().BytesSent / 1024;
+                    i.UpdateLabel(i.LblUD, "Up: " + (UP - pUP) + Environment.NewLine + "Down: " + (DN - pDN));
                 }
                 if (MiscData.isAdmin && !(trycount > 50))
                 {
