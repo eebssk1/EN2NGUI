@@ -18,14 +18,14 @@ namespace EN2NGui
         /// that we are tracking will be automatically killed, too. If the child process terminates
         /// first, that's fine, too.</summary>
         /// <param name="process"></param>
-        public static void AddProcess(Process process)
+        public static bool AddProcess(Process process)
         {
             if (s_jobHandle != IntPtr.Zero)
             {
                 bool success = AssignProcessToJobObject(s_jobHandle, process.Handle);
-                if (!success && !process.HasExited)
-                    throw new Win32Exception();
+                return success || process.HasExited;
             }
+            return false;
         }
 
         static ChildProcessTracker()

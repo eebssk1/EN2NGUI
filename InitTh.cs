@@ -1,6 +1,8 @@
 ﻿using Nucs.JsonSettings;
 using PeNet;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -50,6 +52,12 @@ namespace EN2NGui
                 MiscData.isAdmin = false;
                 handleError(StringRes.StringT.NoAdmin);
             }
+            var insts = Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName);
+            var instsc = insts.Count((p) => { try { return p.MainModule.FileName.StartsWith(MiscData.PWD); } catch (Win32Exception) { return true; } });
+            if (instsc >= 2)
+            {
+                handleError(StringRes.StringT.MultiIns);
+            }
             Thread.Sleep(60);
             NetworkInterface[] taps = NetworkInterface.GetAllNetworkInterfaces();
             var TAPFound = false;
@@ -88,6 +96,7 @@ namespace EN2NGui
                     if (f == null) goto fc;
                     f.Write(Properties.Resources.n2n_edge, 0, Properties.Resources.n2n_edge.Length);
                     f.Close();
+                    f.Dispose();
                     goto fc;
                 }
                 else
@@ -106,6 +115,7 @@ namespace EN2NGui
                 {
                     MiscData.isN2NmatchHash = false;
                 }
+                md5.Dispose();
             }
             Thread.Sleep(60);
             PeFile PE = null;

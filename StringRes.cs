@@ -41,6 +41,7 @@ namespace EN2NGui
             ITDiscla,
             ITDone,
             NEnotMatch,
+            MultiIns,
         }
 
         internal static LocaleT locale;
@@ -121,6 +122,8 @@ namespace EN2NGui
             lower1[StringT.ITDone] = "Install Done. Pls restarted the program.";
             lower0[StringT.NEnotMatch] = "n2n可执行文件与内嵌版本哈希不匹配！你可能正在使用旧(新？)版或自定义n2n文件！" + Environment.NewLine + "你可以打开工作文件夹删除n2n文件后重新打开程序以重新释放。";
             lower1[StringT.NEnotMatch] = "N2N exe Hash does not match with the inbuilt one! You are probably using a old(new?) or custom one!" + Environment.NewLine + "You can open the working directory to delete the n2n file. Then restart the application to release file again.";
+            lower0[StringT.MultiIns] = "当前目录下已有实例正在运行。如果要同时运行多个实例建议放入新的文件夹！";
+            lower1[StringT.MultiIns] = "One or more instances are already running in same directory, If you want to run concurrently pls copy th application to a new directory!";
         }
     }
 }

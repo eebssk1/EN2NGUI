@@ -260,7 +260,7 @@ namespace EN2NGui
                     MessageBox.Show("No TAP Adapter !!!", "!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (TxtComm.Text == "")
+                if (string.IsNullOrWhiteSpace(TxtComm.Text))
                 {
                     MessageBox.Show("Community Name Error !!!", "!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;

@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -19,7 +20,6 @@ namespace EN2NGui
         private bool exit = false;
         internal bool connected = false;
         internal static PeerForm instance;
-
         public PeerForm()
         {
             InitializeComponent();
@@ -32,45 +32,40 @@ namespace EN2NGui
 
         private void PeerForm_Load(object sender, EventArgs e)
         {
-            DataColumn[] cls = new DataColumn[] {new DataColumn
+            table.PrimaryKey = null;
+            table.Columns.AddRange(
+                new DataColumn[] {new DataColumn
             {
                 ColumnName = "Nick",
-                ReadOnly = true,
                 DataType = typeof(string),
             },
             new DataColumn
             {
                 ColumnName = "Mode",
-                ReadOnly = true,
                 DataType = typeof(string),
             },
             new DataColumn
             {
                 ColumnName = "IP",
-                ReadOnly = true,
                 DataType = typeof(string),
             },
             new DataColumn
             {
                 ColumnName = "MAC",
-                ReadOnly = true,
                 DataType = typeof(string),
             },
             new DataColumn
             {
                 ColumnName = "Peer",
-                ReadOnly = true,
                 DataType = typeof(string),
             },
             new DataColumn
             {
                 ColumnName = "Seen",
-                ReadOnly = true,
                 DataType = typeof(string),
             },
-            };
-            table.PrimaryKey = null;
-            table.Columns.AddRange(cls);
+            }
+                );
             source.DataSource = table;
             Action act = () => { dataGridView1.DataSource = source; };
             dataGridView1.Invoke(act);
@@ -155,20 +150,50 @@ namespace EN2NGui
                     r["MAC"] = d.Value<string>("macaddr");
                     r["Peer"] = d.Value<string>("sockaddr");
                     r["Seen"] = DateTimeOffset.FromUnixTimeSeconds(d.Value<int>("last_seen")).ToLocalTime().ToString();
+                    bool create = true;
                     if (table.Rows.Count != 0)
                     {
+                        var dr2rm = new List<DataRow>();
                         foreach (DataRow dr in table.Rows)
                         {
-                            if (((string)dr["Nick"]).Equals(d.Value<string>("desc")))
+                            if ((((string)dr["Nick"]).Equals(d.Value<string>("desc")) || ((string)dr["MAC"]).Equals(d.Value<string>("macaddr"))))
                             {
-                                Action act = () => { table.Rows.Remove(dr); };
-                                dataGridView1.Invoke(act);
-                                break;
+
+                                dr2rm.Add(dr);
                             }
                         }
+                        switch (dr2rm.Count)
+                        {
+                            case 0: break;
+                            case 1: create = false; break;
+                            default:
+                                Action act = () => { foreach (var mr in dr2rm) { table.Rows.Remove(mr); } };
+                                dataGridView1.Invoke(act);
+                                break;
+                        }
                     }
-                    Action act1 = () => { table.Rows.Add(r); };
-                    dataGridView1.Invoke(act1);
+                    if (create)
+                    {
+                        Action act1 = () => { table.Rows.Add(r); };
+                        dataGridView1.Invoke(act1);
+                    }
+                    else
+                    {
+                        var cr = table.Rows.Cast<DataRow>().SingleOrDefault((tr) => ((string)tr["MAC"]).Equals(r["MAC"]));
+                        if (cr != null)
+                        {
+                            Action action = () =>
+                            {
+                                cr["IP"] = r["IP"];
+                                cr["Peer"] = r["Peer"];
+                                cr["Seen"] = r["Seen"];
+                                cr["Mode"] = r["Mode"];
+                                cr["Nick"] = r["Nick"];
+                            };
+                            dataGridView1.Invoke(action);
+                            r.Delete();
+                        }
+                    }
                 }
                 Thread.Yield();
                 Thread.Sleep(2550);
